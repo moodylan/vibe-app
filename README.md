@@ -19,7 +19,7 @@ Tech Stack: React, Supabase, JavaScript, CSS
 
 ## How It Looks
 
-<img src='https://github.com/moodylan/vibe/blob/main/vibe-video-walkthrough.gif' title='Video Walkthrough' alt='Video Walkthrough' />
+<img src='https://github.com/moodylan/vibe-app/blob/main/vibe-video-walkthrough.gif' title='Video Walkthrough' alt='Video Walkthrough' />
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/e7NMCHj"  ><a href="https://imgur.com/a/4NCzaGE" target="_blank">React Website</a></blockquote>
 
 ## Lessons & Challenges
