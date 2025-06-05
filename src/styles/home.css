@@ -1,0 +1,130 @@
+.post-grid-masonry {
+  display: flex;
+  width: auto;
+  padding: 0 3rem 2rem 3rem;
+}
+
+.post-grid-column {
+  background-clip: padding-box;
+}
+
+.post-card {
+  padding: 1.5rem 1.5rem;
+  position: relative;
+}
+
+.image-hover-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.post-image {
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+}
+.image-hover-wrapper:hover .hover-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.spotify-embed {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 80px;
+  z-index: 2;
+  border-radius: 12px;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  padding: 3px;
+}
+
+.sort-options,
+.sort-options button {
+  font-size: 1.25rem;
+  color: var(--text-color);
+}
+
+.sort-options {
+  margin: 1rem 4.5rem;
+  font-weight: bold;
+  padding-top: 1rem;
+}
+
+.sort-options button {
+  background: none;
+  border: none;
+  font-weight: normal;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sort-options .active {
+  text-decoration: underline;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.likes-btn {
+  font-size: 1rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 5rem;
+  margin-top: 2rem;
+  color: red;
+}
+
+@media (max-width: 1280px) {
+  .post-grid-masonry {
+    padding: 0 2rem 2rem 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .post-grid-masonry {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-grid-masonry {
+    padding: 0 1rem;
+  }
+
+  .sort-options,
+  .sort-options button {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    padding: 0 !important;
+  }
+
+  .sort-options {
+    margin: 1.5rem 2rem 0.5rem 2.5rem !important;
+  }
+
+  .post-card {
+    padding: 1rem 1.25rem;
+  }
+}

@@ -1,0 +1,48 @@
+:root {
+  --bg-color: #dedede;
+  --text-color: #000000;
+  --accent-color: #ffffff;
+  --accent-hover: gray;
+  --button-bg: #f9f9f9;
+  --hover-overlay: rgba(0, 0, 0, 0.1);
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="dark"] {
+  --bg-color: #1e1e1e;
+  --text-color: #ffffff;
+  --accent-color: #121212;
+  --accent-hover: gray;
+  --button-bg: #1a1a1a;
+  --hover-overlay: rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(12, 12, 12, 0.95);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Archivo", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+button {
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  background: none;
+  font-weight: 600;
+}
+button,
+input {
+  font-family: "Archivo", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+p {
+  margin: 0;
+}

@@ -1,0 +1,98 @@
+.navbar {
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+  background: var(--navbar-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  margin: 1rem auto 1rem auto;
+  max-width: 95%;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: "Archivo", sans-serif;
+  color: var(--text-color);
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin: 1rem 0.5rem 1rem 0.5rem;
+  padding: 0 0.75rem;
+}
+
+.navbar-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--bg-color);
+  font-size: 1rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.icon-btn {
+  font-size: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem 0 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: 700;
+}
+
+.icon-btn:hover {
+  color: var(--accent-hover);
+}
+
+.create-btn-navbar {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.toggle-btn-navbar {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+@media (max-width: 425px) {
+  .navbar {
+    padding: 1.5rem 1rem;
+    border-radius: 0px;
+    top: 0 !important;
+    margin: 0 !important;
+  }
+  .logo {
+    margin: 0px !important;
+    font-size: 1.5rem !important;
+    padding: 0 !important;
+  }
+  .icon-btn {
+    font-size: 1rem !important;
+    padding: 0 !important;
+  }
+  .search-input {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    background: var(--bg-color);
+    font-size: 0.8rem;
+    width: 100%;
+    max-width: 700px;
+  }
+}
