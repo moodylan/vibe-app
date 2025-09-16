@@ -40,7 +40,7 @@ const Home = () => {
   );
 
   return (
-    <div>
+    <>
       <Navbar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -48,92 +48,110 @@ const Home = () => {
           navigate("/create", { state: { background: location } })
         }
       />
+      <a href="#main" className="sr-only sr-only-focusable">
+        Skip to main content
+      </a>
+      <main id="main">
+        <h1 className="sr-only">Home feed</h1>
+        <div>
+          <button
+            className="create-btn"
+            onClick={() =>
+              navigate("/create", { state: { background: location } })
+            }
+            aria-label="Create a new post"
+            title="Create a new post"
+          >
+            + Post a new vibe
+          </button>
 
-      <button
-        className="create-btn"
-        onClick={() => navigate("/create", { state: { background: location } })}
-      >
-        + Post a new vibe
-      </button>
-
-      <div className="sort-options">
-        <span>Sort by: </span>
-        <button
-          className={sortBy === "createdAt" ? "active" : ""}
-          onClick={() => {
-            setSortBy("createdAt");
-            fetchPosts("createdAt");
-          }}
-        >
-          Latest
-        </button>
-        <button
-          className={sortBy === "likes" ? "active" : ""}
-          onClick={() => {
-            setSortBy("likes");
-            fetchPosts("likes");
-          }}
-        >
-          Most liked
-        </button>
-      </div>
-
-      <Masonry
-        breakpointCols={{
-          default: 4,
-          1280: 3,
-          900: 2,
-          540: 1,
-        }}
-        className="post-grid-masonry"
-        columnClassName="post-grid-column"
-      >
-        {filteredPosts.map((post) => (
-          <div key={post.id} className="post-card">
-            <div className="image-container">
-              <Link
-                to={`/posts/${post.id}`}
-                state={{ background: location }}
-                className="post-image-wrapper"
-              >
-                <div className="image-hover-wrapper">
-                  <img
-                    className="post-image"
-                    src={post.imageUrl}
-                    alt={post.title}
-                  />
-                  <div className="hover-overlay"></div>
-                </div>
-              </Link>
-
-              {post.spotifyUrl && (
-                <iframe
-                  src={`https://open.spotify.com/embed/track/${extractSpotifyId(
-                    post.spotifyUrl
-                  )}`}
-                  width="100%"
-                  height="80"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                ></iframe>
-              )}
-            </div>
-
-            <div className="post-meta">
-              <p>
-                <strong>
-                  {post.title.slice(0, 20)}
-                  {post.title.length > 20 && "…"}
-                </strong>{" "}
-                · {timeAgo(post.createdAt)}
-              </p>
-              <UpvoteButton postId={post.id} likes={post.likes} />
-            </div>
+          <div className="sort-options" role="group" aria-label="Sort posts">
+            <span>Sort by: </span>
+            <button
+              className={sortBy === "createdAt" ? "active" : ""}
+              onClick={() => {
+                setSortBy("createdAt");
+                fetchPosts("createdAt");
+              }}
+            >
+              Latest
+            </button>
+            <button
+              className={sortBy === "likes" ? "active" : ""}
+              onClick={() => {
+                setSortBy("likes");
+                fetchPosts("likes");
+              }}
+            >
+              Most liked
+            </button>
           </div>
-        ))}
-      </Masonry>
-    </div>
+
+          <Masonry
+            breakpointCols={{
+              default: 4,
+              1280: 3,
+              900: 2,
+              540: 1,
+            }}
+            className="post-grid-masonry"
+            columnClassName="post-grid-column"
+          >
+            {filteredPosts.map((post) => (
+              <div key={post.id} className="post-card">
+                <div className="image-container">
+                  <Link
+                    to={`/posts/${post.id}`}
+                    state={{ background: location }}
+                    className="post-image-wrapper"
+                    aria-label={`View post: ${post.title}`}
+                  >
+                    <div className="image-hover-wrapper">
+                      <img
+                        className="post-image"
+                        src={post.imageUrl}
+                        alt={post.title || "Post image"}
+                      />
+                      <div className="hover-overlay" aria-hidden="true"></div>
+                    </div>
+                  </Link>
+
+                  {post.spotifyUrl && (
+                    <iframe
+                      title={`Spotify player: ${post.title || "track"}`}
+                      src={`https://open.spotify.com/embed/track/${extractSpotifyId(
+                        post.spotifyUrl
+                      )}`}
+                      width="100%"
+                      height="80"
+                      frameBorder="0"
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                      loading="lazy"
+                    ></iframe>
+                  )}
+                </div>
+
+                <div className="post-meta">
+                  <p>
+                    <strong>
+                      {post.title.slice(0, 20)}
+                      {post.title.length > 20 && "…"}
+                    </strong>{" "}
+                    · {timeAgo(post.createdAt)}
+                  </p>
+                  <UpvoteButton postId={post.id} likes={post.likes} />
+                </div>
+              </div>
+            ))}
+            {filteredPosts.length === 0 && (
+              <p role="status" className="no-posts-message">
+                No posts match your search.
+              </p>
+            )}
+          </Masonry>
+        </div>
+      </main>
+    </>
   );
 };
 

@@ -17,8 +17,9 @@ const Navbar = ({ searchQuery, setSearchQuery, onCreateClick }) => {
 
       <div className="navbar-center">
         <input
+          id="site-search"
           className="search-input"
-          type="text"
+          type="search"
           placeholder="Search by title"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -30,12 +31,18 @@ const Navbar = ({ searchQuery, setSearchQuery, onCreateClick }) => {
         <button
           onClick={onCreateClick}
           className="icon-btn create-btn-navbar"
-          title="Create"
+          title="Create a new post"
+          aria-label="Create a new post"
         >
-          +
+          <span aria-hidden="true">+</span>
         </button>
         {!user && (
-          <Link to="/login" className="icon-btn">
+          <Link
+            to="/login"
+            className="icon-btn login-btn-navbar"
+            title="Log in to your account"
+            aria-label="Log in to your account"
+          >
             Login
           </Link>
         )}

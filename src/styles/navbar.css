@@ -2,17 +2,19 @@
   position: sticky;
   top: 1rem;
   z-index: 10;
-  background: var(--navbar-bg);
+  background: var(--accent-color);
+  opacity: 0.95;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.25rem 1rem;
   border-radius: 12px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-  margin: 1rem auto 1rem auto;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+  margin: 1rem 2rem 1.5rem 2rem;
   max-width: 95%;
   gap: 1rem;
   flex-wrap: wrap;
+  border: 1px solid var(--btn-border-color);
 }
 
 .logo {
@@ -38,6 +40,12 @@
   font-size: 1rem;
   width: 100%;
   max-width: 700px;
+  color: var(--text-color);
+  border: 1px solid var(--btn-border-color);
+}
+
+.search-input::placeholder {
+  color: var(--text-color);
 }
 
 .navbar-right {
@@ -56,13 +64,10 @@
   font-weight: 700;
 }
 
-.icon-btn:hover {
-  color: var(--accent-hover);
-}
-
 .create-btn-navbar {
   font-size: 2rem;
   font-weight: 800;
+  padding-bottom: 0.2rem;
 }
 
 .toggle-btn-navbar {
@@ -70,21 +75,49 @@
   font-weight: 800;
 }
 
-@media (max-width: 425px) {
+.login-btn-navbar {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.icon-btn:hover {
+  color: var(--accent-hover);
+}
+
+.create-btn-navbar:hover,
+.toggle-btn-navbar:hover {
+  transform: scale(1.1);
+}
+
+.login-btn-navbar:hover {
+  text-decoration: underline;
+}
+
+.icon-btn:focus-visible,
+.search-input:focus-visible,
+.logo:focus-visible {
+  outline: 3px solid var(--focus-ring, #005fcc);
+  outline-offset: 3px;
+}
+
+@media (max-width: 635px) {
   .navbar {
-    padding: 1.5rem 1rem;
+    padding: 1rem 1rem;
     border-radius: 0px;
     top: 0 !important;
     margin: 0 !important;
   }
   .logo {
     margin: 0px !important;
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
     padding: 0 !important;
   }
   .icon-btn {
     font-size: 1rem !important;
-    padding: 0 !important;
+    padding: 0.25rem !important;
+  }
+  .create-btn-navbar {
+    display: none;
   }
   .search-input {
     padding: 0.5rem;
@@ -94,5 +127,14 @@
     font-size: 0.8rem;
     width: 100%;
     max-width: 700px;
+  }
+}
+
+/* avoid scaling for users that prefer less animation */
+@media (prefers-reduced-motion: reduce) {
+  .create-btn-navbar:hover,
+  .toggle-btn-navbar:hover {
+    transform: none;
+    transition: none;
   }
 }

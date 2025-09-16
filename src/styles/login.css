@@ -9,7 +9,7 @@
 }
 
 .login-card {
-  background: var(--card-bg, white);
+  background: var(--accent-color, #fff);
   padding: 2rem;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -22,12 +22,13 @@
   font-size: 3.5rem;
   margin-bottom: 0.5rem;
   font-weight: 800;
+  color: var(--text-color, #000);
 }
 
 .login-tagline {
   font-size: 1rem;
   margin-bottom: 2rem;
-  color: var(--subtle-text, #666);
+  color: var(--text-color, #666);
   line-height: 1.5;
 }
 
@@ -56,6 +57,7 @@
 
 .login-card button:hover {
   color: var(--accent-hover, #000);
+  text-decoration: underline;
 }
 
 @media (max-width: 640px) {

@@ -14,7 +14,12 @@ const LogoutButton = () => {
 
   return (
     <div>
-      <button className="icon-btn" onClick={handleLogout}>
+      <button
+        className="icon-btn login-btn-navbar"
+        title="Log out of your account"
+        aria-label="Log out of your account"
+        onClick={handleLogout}
+      >
         Logout
       </button>
     </div>

@@ -8,11 +8,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .modal-content {
   background: var(--accent-color);
+  border: 2px solid var(--btn-border-color);
   padding: 2rem;
   border-radius: 20px;
   max-width: 600px;
@@ -47,8 +48,8 @@
   right: 2rem;
   background: var(--accent-color);
   color: var(--text-color);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  border: none;
+  box-shadow: 4px 8px 30px rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--btn-border-color);
   border-radius: 12px;
   padding: 0.75rem 1.5rem;
   font-size: 1.2rem;
@@ -57,7 +58,7 @@
 }
 
 .create-btn:hover {
-  transform: scale(1.035);
+  transform: scale(1.055);
   transition: all 0.2s ease-in-out;
 }
 
@@ -107,7 +108,7 @@
   }
 
   .create-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
     right: 1rem;
   }

@@ -5,17 +5,17 @@
   --accent-hover: gray;
   --button-bg: #f9f9f9;
   --hover-overlay: rgba(0, 0, 0, 0.1);
-  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --btn-border-color: #ffffff;
 }
 
 [data-theme="dark"] {
-  --bg-color: #1e1e1e;
+  --bg-color: #121212;
   --text-color: #ffffff;
-  --accent-color: #121212;
+  --accent-color: #000000;
   --accent-hover: gray;
   --button-bg: #1a1a1a;
   --hover-overlay: rgba(255, 255, 255, 0.1);
-  --navbar-bg: rgba(12, 12, 12, 0.95);
+  --btn-border-color: gray;
 }
 
 body {
