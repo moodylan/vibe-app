@@ -118,7 +118,7 @@ const Home = () => {
 
                   {post.spotifyUrl && (
                     <iframe
-                      title={`Spotify player: ${post.title || "track"}`}
+                      title={`Spotify player for ${post.title || "track"}`}
                       src={`https://open.spotify.com/embed/track/${extractSpotifyId(
                         post.spotifyUrl
                       )}`}

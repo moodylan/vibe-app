@@ -27,6 +27,7 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <label htmlFor="email">Email Address:</label>
           <input
+            autoFocus
             id="email"
             name="email"
             type="email"

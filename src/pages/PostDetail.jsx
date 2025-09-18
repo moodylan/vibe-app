@@ -1,5 +1,5 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { PostContext } from "../context/PostContext";
 import { AuthContext } from "../context/AuthProvider";
 import { supabase } from "../supabaseClient";
@@ -19,6 +19,51 @@ const PostDetail = () => {
   const [editingContent, setEditingContent] = useState("");
 
   const post = posts.find((p) => p.id.toString() === id);
+
+  // Accessibility: Close modal on Escape key press
+  const dialogRef = useRef(null);
+  const previouslyFocused = useRef(null);
+
+  useEffect(() => {
+    previouslyFocused.current = document.activeElement;
+    // focus the close button or first focusable element
+    const first = dialogRef.current?.querySelector(
+      'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    );
+    first?.focus();
+
+    // prevent background scroll
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = overflow;
+      previouslyFocused.current?.focus?.();
+    };
+  }, []);
+
+  const handleKeydown = (e) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      navigate(-1);
+      return;
+    }
+    if (e.key === "Tab" && dialogRef.current) {
+      const focusables = dialogRef.current.querySelectorAll(
+        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      );
+      const list = Array.from(focusables);
+      if (list.length === 0) return;
+      const first = list[0];
+      const last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
 
   const fetchComments = async () => {
     const { data, error } = await supabase
@@ -108,107 +153,150 @@ const PostDetail = () => {
   };
 
   return (
-    <div className="modal-overlay" onClick={() => navigate(-1)}>
+    <div
+      className="modal-overlay"
+      onClick={() => navigate(-1)}
+      role="presentation"
+    >
       <div
         className="modal-content post-detail"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="post-detail-title"
+        aria-describedby="post-detail-desc"
         onClick={(e) => e.stopPropagation()}
+        ref={dialogRef}
+        onKeyDown={handleKeydown}
       >
-        <button className="close-btn" onClick={() => navigate(-1)}>
-          &times;
-        </button>
-        <div className="post-info-top">
-          <p>{timeAgo(post.createdAt)}</p>
-          {user?.id === post.user_id && (
-            <div className="post-actions">
-              <button
-                onClick={() =>
-                  navigate(`/edit/${post.id}`, {
-                    state: {
-                      background: location.state?.background || location,
-                    },
-                  })
-                }
-              >
-                Edit
-              </button>
-
-              <button onClick={handleDelete}>Delete</button>
-            </div>
-          )}
-        </div>
-
-        {post.spotifyUrl && (
-          <iframe
-            src={`https://open.spotify.com/embed/track/${extractSpotifyId(
-              post.spotifyUrl
-            )}`}
-            width="100%"
-            height="80"
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-          ></iframe>
-        )}
-        <img src={post.imageUrl} alt={post.title} />
-
-        <h2>{post.title}</h2>
-        <p className="post-description">{post.description}</p>
-        <p>
-          <UpvoteButton postId={post.id} likes={post.likes} />
-          likes
-        </p>
-
-        <div className="comment-section">
-          <div className="comment-list">
-            {comments.map((c) => (
-              <div key={c.id} className="comment-item">
-                <p>
-                  <strong>{c.profiles?.display_name || "Unknown"}</strong> ·{" "}
-                  {new Date(c.created_at).toLocaleString()}
-                </p>
-                {editingCommentId === c.id ? (
-                  <>
-                    <input
-                      value={editingContent}
-                      onChange={(e) => setEditingContent(e.target.value)}
-                    />
-                    <button onClick={() => updateComment(c.id)}>Save</button>
-                    <button onClick={() => setEditingCommentId(null)}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <p>{c.content}</p>
-                )}
-
-                {user?.id === c.user_id && editingCommentId !== c.id && (
-                  <div className="comment-actions">
-                    <button
-                      onClick={() => {
-                        setEditingCommentId(c.id);
-                        setEditingContent(c.content);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button onClick={() => deleteComment(c.id)}>Delete</button>
-                  </div>
-                )}
-              </div>
-            ))}
+        {!post ? (
+          <div>
+            <button
+              className="close-btn"
+              onClick={() => navigate(-1)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <p>Post not found.</p>
           </div>
+        ) : (
+          <>
+            <button
+              className="close-btn"
+              onClick={() => navigate(-1)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <div className="post-info-top">
+              <p>
+                <time dateTime={new Date(post.createdAt).toISOString()}>
+                  {timeAgo(post.createdAt)}
+                </time>
+              </p>
+              {user?.id === post.user_id && (
+                <div className="post-actions">
+                  <button
+                    onClick={() =>
+                      navigate(`/edit/${post.id}`, {
+                        state: {
+                          background: location.state?.background || location,
+                        },
+                      })
+                    }
+                  >
+                    Edit
+                  </button>
 
-          <form onSubmit={(e) => handleAddComment(e)} className="comment-form">
-            <input
-              type="text"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Add a comment..."
-              required
-            />
-            <button type="submit">Post</button>
-          </form>
-        </div>
+                  <button onClick={handleDelete}>Delete</button>
+                </div>
+              )}
+            </div>
+
+            {post.spotifyUrl && (
+              <iframe
+                title={`Spotify player for ${post.title || "track"}`}
+                src={`https://open.spotify.com/embed/track/${extractSpotifyId(
+                  post.spotifyUrl
+                )}`}
+                width="100%"
+                height="80"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe>
+            )}
+            <img src={post.imageUrl} alt={post.title} />
+
+            <h2 id="post-detail-title">{post.title}</h2>
+            <p id="post-detail-desc" className="post-description">
+              {post.description}
+            </p>
+            <p>
+              <UpvoteButton postId={post.id} likes={post.likes} />
+              likes
+            </p>
+
+            <div className="comment-section">
+              <div className="comment-list">
+                {comments.map((c) => (
+                  <div key={c.id} className="comment-item">
+                    <p>
+                      <strong>{c.profiles?.display_name || "Unknown"}</strong> ·{" "}
+                      {new Date(c.created_at).toLocaleString()}
+                    </p>
+                    {editingCommentId === c.id ? (
+                      <>
+                        <input
+                          value={editingContent}
+                          onChange={(e) => setEditingContent(e.target.value)}
+                        />
+                        <button onClick={() => updateComment(c.id)}>
+                          Save
+                        </button>
+                        <button onClick={() => setEditingCommentId(null)}>
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <p>{c.content}</p>
+                    )}
+
+                    {user?.id === c.user_id && editingCommentId !== c.id && (
+                      <div className="comment-actions">
+                        <button
+                          onClick={() => {
+                            setEditingCommentId(c.id);
+                            setEditingContent(c.content);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button onClick={() => deleteComment(c.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <form
+                onSubmit={(e) => handleAddComment(e)}
+                className="comment-form"
+              >
+                <input
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Add a comment..."
+                  required
+                />
+                <button type="submit">Post</button>
+              </form>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
