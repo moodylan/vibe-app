@@ -12,7 +12,7 @@ const Navbar = ({ searchQuery, setSearchQuery, onCreateClick }) => {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <h2 className="logo">VIBE</h2>
+        <h1 className="logo">VIBE</h1>
       </div>
 
       <div className="navbar-center">

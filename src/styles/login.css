@@ -16,13 +16,21 @@
   max-width: 300px;
   width: 100%;
   text-align: center;
+  border: 2px solid var(--btn-border-color);
 }
 
 .login-card h1 {
   font-size: 3.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  margin-top: 1rem;
   font-weight: 800;
   color: var(--text-color, #000);
+}
+
+.login-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color, #333);
 }
 
 .login-tagline {
@@ -32,32 +40,63 @@
   line-height: 1.5;
 }
 
+.login-card form {
+  padding: 0 1rem;
+}
+
+.magic-link-description {
+  font-size: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color, #666);
+  line-height: 1.4;
+  padding: 0 2rem;
+}
+
 .login-card input {
-  width: 80%;
-  padding: 1rem 0rem 1rem 1rem;
-  font-size: 1rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
   border: none;
-  background: var(--input-bg, #f0f0f0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: var(--bg-color, #f9f9f9);
   border-radius: 8px;
-  margin-bottom: 1rem;
+  border: 2px solid var(--btn-border-color);
   outline: none;
+  color: var(--text-color);
+}
+
+.login-card input:focus {
+  border: 2px solid var(--accent, #007bff);
+}
+
+.login-card input::placeholder {
+  color: var(--text-color, #999);
+}
+
+.login-card label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding-bottom: 0.25rem;
+  color: var(--text-color, #000);
 }
 
 .login-card button {
-  width: 100%;
-  padding: 0.8rem 1rem;
   font-size: 1rem;
   color: var(--text-color, #fff);
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+  padding: 0.6rem 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .login-card button:hover {
-  color: var(--accent-hover, #000);
+  color: var(--accent-hover);
   text-decoration: underline;
+}
+
+.login-card button:focus {
+  border: 2px solid var(--accent, #007bff);
 }
 
 @media (max-width: 640px) {
@@ -74,7 +113,6 @@
     font-size: 0.9rem;
   }
   .login-card input {
-    padding: 0.8rem;
     font-size: 0.9rem;
   }
   .login-card button {

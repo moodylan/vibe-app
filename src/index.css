@@ -9,9 +9,9 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #121212;
+  --bg-color: #141414;
   --text-color: #ffffff;
-  --accent-color: #000000;
+  --accent-color: #0f0f0f;
   --accent-hover: gray;
   --button-bg: #1a1a1a;
   --hover-overlay: rgba(255, 255, 255, 0.1);
